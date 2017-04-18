@@ -5,7 +5,8 @@ namespace ClsAppEntityCoreFeatures.Model
     public sealed class Database : DbContext
     {
 
-        private const string DatabaseConnectionString = "Server=.\\SQLExpress;Database=DataBase;User Id=sa;Password=senha;MultipleActiveResultSets=true;";
+        private const string DatabaseConnectionString 
+            = "Server=.\\SQLExpress;Database=DataBase;User Id=sa;Password=senha;MultipleActiveResultSets=true;";
 
         public Database()
         {
@@ -13,6 +14,8 @@ namespace ClsAppEntityCoreFeatures.Model
         }
 
         public DbSet<General> General { get; set; }
+        public DbSet<Phone> Phone { get; set; }
+        public DbSet<People> People { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -25,8 +28,12 @@ namespace ClsAppEntityCoreFeatures.Model
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<General>()
-                .Property<DateTime?>("LastUpdate");
+            //Shadow Properties
+            modelBuilder.Entity<General>().Property<DateTime?>("LastUpdate");
+
+            //Shadow Conventions
+            modelBuilder.Entity<People>().ToTable("People");
+            modelBuilder.Entity<Phone>().ToTable("Phone");
 
             //base.OnModelCreating(modelBuilder);
         }

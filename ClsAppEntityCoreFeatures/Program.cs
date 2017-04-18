@@ -34,16 +34,29 @@ namespace ClsAppEntityCoreFeatures
 
                 //SELECT
                 //---------------------------------------------------------------------------------
-                var re = db.General
-                    .OrderByDescending(c => EF.Property<DateTime?>(c, "LastUpdate"))
-                    .Select(c => new
-                    {
-                        c.Id,
-                        c.Name, 
-                        LastUpdate = EF.Property<DateTime?>(c, "LastUpdate")
-                    })
-                    .ToList();                
+                //var re = db.General
+                //    .OrderByDescending(c => EF.Property<DateTime?>(c, "LastUpdate"))
+                //    .Select(c => new
+                //    {
+                //        c.Id,
+                //        c.Name, 
+                //        LastUpdate = EF.Property<DateTime?>(c, "LastUpdate")
+                //    })
+                //    .ToList();                
 
+
+                //People p = new People();
+                //p.Name = "Nome 2";
+                //p.Phones.Add(new Phone
+                //{
+                //    People = p,
+                //    Number = "(11)9999-8888"
+                //});
+
+                //db.People.Add(p);
+
+
+                People p = db.People.Include(c => c.Phones).Where(c => c.PeopleId == 2).FirstOrDefault();
                 db.SaveChanges();
             }
 
