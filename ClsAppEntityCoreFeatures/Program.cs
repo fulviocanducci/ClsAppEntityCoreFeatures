@@ -1,8 +1,5 @@
 ﻿using ClsAppEntityCoreFeatures.Model;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
-using System.Linq;
 
 namespace ClsAppEntityCoreFeatures
 {
@@ -17,8 +14,8 @@ namespace ClsAppEntityCoreFeatures
                 //ADD
                 //---------------------------------------------------------------------------------
                 //General g = new General();
-                //g.Name = "General 2";
-                //db.Entry(g).Property<DateTime?>("LastUpdate").CurrentValue = DateTime.Now.AddDays(-1);
+                //g.Name = "General 4";
+                ////db.Entry(g).Property<DateTime?>("LastUpdate").CurrentValue = DateTime.Now.AddDays(-1);
                 //db.Add(g);
 
 
@@ -39,25 +36,28 @@ namespace ClsAppEntityCoreFeatures
                 //    .Select(c => new
                 //    {
                 //        c.Id,
-                //        c.Name, 
+                //        c.Name,
                 //        LastUpdate = EF.Property<DateTime?>(c, "LastUpdate")
                 //    })
-                //    .ToList();                
+                //    .ToList();
 
+                //SELECT WITH TUPLE
+                //---------------------------------------------------------------------------------
+                //List<Tuple<int, string, DateTime?>> items =
+                //    db
+                //    .General
+                //    .Select(c => new Tuple<int, string, DateTime?>(c.Id, c.Name, EF.Property<DateTime?>(c, "LastUpdate")))
+                //    .ToList();
 
-                //People p = new People();
-                //p.Name = "Nome 2";
-                //p.Phones.Add(new Phone
+                //foreach (Tuple<int, string, DateTime?> item in items)
                 //{
-                //    People = p,
-                //    Number = "(11)9999-8888"
-                //});
+                //    //item.Item1;
+                //    //item.Item2;  
+                //    //item.Item3;
+                //}
 
-                //db.People.Add(p);
+                //db.SaveChanges();
 
-
-                People p = db.People.Include(c => c.Phones).Where(c => c.PeopleId == 2).FirstOrDefault();
-                db.SaveChanges();
             }
 
             Console.ReadKey();
